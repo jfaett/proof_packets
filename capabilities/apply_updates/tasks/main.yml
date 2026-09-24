@@ -1,0 +1,30 @@
+---
+- name: Require explicit authorization for live patching
+  ansible.builtin.assert:
+    that:
+      - demo_mode | bool or patch_execute_confirmed | bool
+    fail_msg: "Live patch execution is disabled. Set patch_execute_confirmed only after approved change and recovery review."
+
+- name: Explain simulated package update
+  ansible.builtin.debug:
+    msg: "SIMULATION: would apply approved {{ 'security' if patch_security_only else 'package' }} updates."
+  when: demo_mode | bool
+
+- name: Apply approved RHEL updates
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_only: true
+    security: "{{ patch_security_only | bool }}"
+    disable_gpg_check: false
+  become: true
+  register: apply_updates_live
+  when: not demo_mode | bool
+
+- name: Publish package update result
+  ansible.builtin.set_fact:
+    apply_updates_result:
+      simulated: "{{ demo_mode | bool }}"
+      changed: "{{ false if demo_mode else apply_updates_live.changed | default(false) }}"
+      security_only: "{{ patch_security_only | bool }}"
+      passed: true

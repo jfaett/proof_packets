@@ -1,0 +1,84 @@
+---
+- name: Execute governed patch capability chain
+  block:
+    - name: Validate authoritative approval context
+      ansible.builtin.include_role:
+        name: approval_gate
+
+    - name: Validate normalized readiness facts
+      ansible.builtin.include_role:
+        name: patch_precheck
+
+    - name: Record precheck evidence
+      ansible.builtin.include_role:
+        name: evidence_checkpoint
+      vars:
+        evidence_stage: precheck
+        evidence_pack_version: "{{ proof_pack_version }}"
+        evidence_change_reference: "{{ approval_reference }}"
+        evidence_payload:
+          approval: "{{ approval_gate_result }}"
+          readiness: "{{ patch_precheck_result }}"
+
+    - name: Quiesce the illustrative workload
+      ansible.builtin.include_role:
+        name: workload_quiesce
+      vars:
+        workload_action: quiesce
+
+    - name: Apply approved updates
+      ansible.builtin.include_role:
+        name: apply_updates
+
+    - name: Reboot when required and wait for readiness
+      ansible.builtin.include_role:
+        name: controlled_reboot
+
+    - name: Restore the illustrative workload
+      ansible.builtin.include_role:
+        name: workload_quiesce
+      vars:
+        workload_action: restore
+
+    - name: Verify service health
+      ansible.builtin.include_role:
+        name: service_health_check
+
+    - name: Record accepted checkpoint
+      ansible.builtin.include_role:
+        name: evidence_checkpoint
+      vars:
+        evidence_stage: accepted
+        evidence_pack_version: "{{ proof_pack_version }}"
+        evidence_change_reference: "{{ approval_reference }}"
+        evidence_payload:
+          update: "{{ apply_updates_result }}"
+          reboot: "{{ controlled_reboot_result }}"
+          health: "{{ service_health_check_result }}"
+
+    - name: Update simulated or live system of record
+      ansible.builtin.include_role:
+        name: system_of_record_update
+      vars:
+        sor_payload:
+          change_reference: "{{ approval_reference }}"
+          host: "{{ inventory_hostname }}"
+          state: accepted
+          proof_pack_version: "{{ proof_pack_version }}"
+
+  rescue:
+    - name: Record failed checkpoint
+      ansible.builtin.include_role:
+        name: evidence_checkpoint
+      vars:
+        evidence_stage: failed
+        evidence_pack_version: "{{ proof_pack_version }}"
+        evidence_change_reference: "{{ approval_reference }}"
+        evidence_payload:
+          failed_task: "{{ ansible_failed_task.name | default('unknown') }}"
+          failure_result: "{{ ansible_failed_result.msg | default('See controller job output') }}"
+          action: "Stop progression and invoke the agreed recovery or escalation plan."
+
+    - name: Stop after recording failure
+      ansible.builtin.fail:
+        msg: "Patch capability chain stopped. Review the failure checkpoint and agreed recovery plan."

@@ -1,0 +1,5 @@
+---
+approval_status: approved
+approval_reference: ILLUSTRATIVE-CHG-0001
+approval_allowed_statuses:
+  - approved

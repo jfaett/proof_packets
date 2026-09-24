@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "service_health_check",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "application-automation-owner",
+  "summary": "Verify selected services and HTTP endpoints after change.",
+  "inputs": ["demo_mode", "health_services", "health_endpoints", "simulated_health_passed"],
+  "outputs": ["service_health_check_result"],
+  "failures": ["service not running", "endpoint status unexpected", "application acceptance unavailable"],
+  "evidence": ["service states", "endpoint status", "acceptance result"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Reference service and HTTP checks; business acceptance remains customer-defined."
+}

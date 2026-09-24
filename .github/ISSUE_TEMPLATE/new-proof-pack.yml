@@ -1,0 +1,32 @@
+name: New Proof Pack
+description: Propose an outcome-oriented Proof Pack
+title: "[proof-pack] "
+labels: ["proof-pack", "discovery"]
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome and decision
+      description: What customer outcome and decision will the pack support?
+    validations:
+      required: true
+  - type: textarea
+    id: consumers
+    attributes:
+      label: Users and owners
+      description: Who will use, sponsor, and maintain it?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence hypothesis
+      description: What baseline and result could be measured?
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety, data, and source constraints
+    validations:
+      required: true

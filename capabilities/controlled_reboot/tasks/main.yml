@@ -1,0 +1,23 @@
+---
+- name: Explain simulated reboot
+  ansible.builtin.debug:
+    msg: "SIMULATION: reboot required={{ reboot_required | bool }}; host readiness would be checked."
+  when: demo_mode | bool
+
+- name: Perform bounded live reboot
+  ansible.builtin.reboot:
+    reboot_timeout: "{{ reboot_timeout_seconds | int }}"
+    test_command: "{{ reboot_test_command }}"
+  become: true
+  register: controlled_reboot_live
+  when:
+    - not demo_mode | bool
+    - reboot_required | bool
+
+- name: Publish controlled reboot result
+  ansible.builtin.set_fact:
+    controlled_reboot_result:
+      required: "{{ reboot_required | bool }}"
+      performed: "{{ reboot_required | bool and not demo_mode | bool }}"
+      simulated: "{{ demo_mode | bool }}"
+      ready: true

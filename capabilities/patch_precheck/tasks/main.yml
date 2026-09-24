@@ -1,0 +1,20 @@
+---
+- name: Stop when patch readiness checks fail
+  ansible.builtin.assert:
+    that:
+      - precheck_disk_free_mb | int >= precheck_min_free_mb | int
+      - precheck_repo_reachable | bool
+      - precheck_package_ready | bool
+      - precheck_service_healthy | bool
+    fail_msg: "Patch precheck failed. Stop this host or batch and remediate the reported readiness input."
+    success_msg: "Patch readiness inputs passed."
+
+- name: Publish patch precheck result
+  ansible.builtin.set_fact:
+    patch_precheck_result:
+      passed: true
+      disk_free_mb: "{{ precheck_disk_free_mb | int }}"
+      minimum_disk_mb: "{{ precheck_min_free_mb | int }}"
+      repository_reachable: "{{ precheck_repo_reachable | bool }}"
+      package_ready: "{{ precheck_package_ready | bool }}"
+      service_healthy: "{{ precheck_service_healthy | bool }}"

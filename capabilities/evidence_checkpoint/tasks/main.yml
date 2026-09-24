@@ -1,0 +1,29 @@
+---
+- name: Validate evidence checkpoint context
+  ansible.builtin.assert:
+    that:
+      - evidence_stage | length > 0
+      - evidence_change_reference | length > 0
+      - evidence_pack_version | length > 0
+    fail_msg: "Evidence checkpoint requires stage, change reference, and pack version."
+
+- name: Create controller evidence directory
+  ansible.builtin.file:
+    path: "{{ evidence_directory }}"
+    state: directory
+    mode: "0750"
+  delegate_to: localhost
+
+- name: Write redacted workflow checkpoint
+  ansible.builtin.copy:
+    dest: "{{ evidence_directory }}/{{ evidence_change_reference }}-{{ inventory_hostname }}-{{ evidence_stage }}.json"
+    mode: "0640"
+    content: "{{ evidence_payload | combine({'stage': evidence_stage, 'change_reference': evidence_change_reference, 'host': inventory_hostname, 'pack_version': evidence_pack_version, 'recorded_at_utc': now(utc=true, fmt='%Y-%m-%dT%H:%M:%SZ')}) | to_nice_json }}"
+  delegate_to: localhost
+
+- name: Publish evidence checkpoint result
+  ansible.builtin.set_fact:
+    evidence_checkpoint_result:
+      path: "{{ evidence_directory }}/{{ evidence_change_reference }}-{{ inventory_hostname }}-{{ evidence_stage }}.json"
+      stage: "{{ evidence_stage }}"
+      passed: true

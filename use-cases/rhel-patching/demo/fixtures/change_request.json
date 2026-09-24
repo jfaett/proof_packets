@@ -1,0 +1,14 @@
+{
+  "label": "ILLUSTRATIVE",
+  "change_reference": "ILLUSTRATIVE-CHG-0001",
+  "state": "approved",
+  "service": "illustrative-app",
+  "window": {
+    "start": "2030-01-15T02:00:00Z",
+    "end": "2030-01-15T04:00:00Z"
+  },
+  "content_reference": "ILLUSTRATIVE-CONTENT-V1",
+  "pilot_group": "rhel_patch_pilot",
+  "batch_group": "rhel_patch_batch",
+  "owner": "CUSTOMER INPUT REQUIRED"
+}

@@ -1,0 +1,47 @@
+---
+- name: Validate live system-of-record configuration
+  ansible.builtin.assert:
+    that:
+      - sor_endpoint | length > 0
+      - sor_token | length > 0
+    fail_msg: "Live system-of-record update requires an endpoint and an injected token."
+  when: not demo_mode | bool
+
+- name: Create simulated evidence directory
+  ansible.builtin.file:
+    path: "{{ sor_evidence_directory }}"
+    state: directory
+    mode: "0750"
+  delegate_to: localhost
+  when: demo_mode | bool
+
+- name: Write simulated system-of-record update
+  ansible.builtin.copy:
+    dest: "{{ sor_evidence_directory }}/sor-{{ inventory_hostname }}.json"
+    mode: "0640"
+    content: "{{ sor_payload | combine({'simulated': true, 'host': inventory_hostname}) | to_nice_json }}"
+  delegate_to: localhost
+  when: demo_mode | bool
+
+- name: Send live system-of-record update
+  ansible.builtin.uri:
+    url: "{{ sor_endpoint }}"
+    method: "{{ sor_method }}"
+    headers:
+      Authorization: "Bearer {{ sor_token }}"
+      Content-Type: application/json
+    body_format: json
+    body: "{{ sor_payload }}"
+    status_code: "{{ sor_expected_status }}"
+    validate_certs: true
+    return_content: false
+  no_log: true
+  register: sor_live_response
+  when: not demo_mode | bool
+
+- name: Publish system-of-record result
+  ansible.builtin.set_fact:
+    system_of_record_update_result:
+      simulated: "{{ demo_mode | bool }}"
+      status: "{{ 'simulated' if demo_mode else sor_live_response.status | default('unknown') }}"
+      passed: true

@@ -1,0 +1,16 @@
+---
+cases:
+  - name: complete context writes evidence
+    inputs:
+      evidence_stage: precheck
+      evidence_change_reference: CHG-1
+      evidence_pack_version: 1.0.0
+    expected: pass
+  - name: missing change reference fails
+    inputs:
+      evidence_stage: precheck
+      evidence_change_reference: ""
+      evidence_pack_version: 1.0.0
+    expected: fail
+  - name: payload must be redacted by caller
+    expected: review-required

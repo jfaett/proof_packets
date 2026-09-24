@@ -1,0 +1,10 @@
+# CUSTOMER INPUT REQUIRED: replace the commented placeholders with real GitHub
+# users or teams, then uncomment them. False owner handles are intentionally
+# avoided so a newly imported repository does not imply review coverage.
+#
+# * @your-org/repository-maintainers
+# /governance/ @your-org/repository-maintainers
+# /templates/ @your-org/repository-maintainers
+# /capabilities/ @your-org/automation-content-owners @your-org/repository-maintainers
+# /use-cases/rhel-patching/ @your-org/rhel-patching-pack-owners @your-org/repository-maintainers
+# /.github/ @your-org/repository-maintainers

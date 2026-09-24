@@ -1,0 +1,38 @@
+---
+schema_version: "1.0"
+kind: workflow-design
+note: "Scaffold only. Map names to customer organization, inventory, credentials, and job templates."
+nodes:
+  - id: validate_request
+    type: job_template
+    on_success: approve_window
+    on_failure: record_exception
+  - id: approve_window
+    type: approval
+    timeout_policy: customer_required
+    on_success: pilot_precheck
+    on_failure: record_exception
+  - id: pilot_precheck
+    type: job_template
+    on_success: pilot_patch
+    on_failure: record_exception
+  - id: pilot_patch
+    type: job_template
+    on_success: pilot_acceptance
+    on_failure: recover_or_escalate
+  - id: pilot_acceptance
+    type: approval
+    on_success: patch_batches
+    on_failure: recover_or_escalate
+  - id: patch_batches
+    type: workflow_job_template
+    on_success: final_evidence
+    on_failure: recover_or_escalate
+  - id: recover_or_escalate
+    type: job_template
+    on_success: final_evidence
+    on_failure: record_exception
+  - id: final_evidence
+    type: job_template
+  - id: record_exception
+    type: job_template

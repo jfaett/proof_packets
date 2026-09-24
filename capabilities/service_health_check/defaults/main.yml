@@ -1,0 +1,5 @@
+---
+demo_mode: true
+health_services: []
+health_endpoints: []
+simulated_health_passed: true

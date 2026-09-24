@@ -1,0 +1,16 @@
+---
+cases:
+  - name: simulation writes local record
+    inputs:
+      demo_mode: true
+      sor_payload:
+        state: in_progress
+    expected: pass
+  - name: live mode requires endpoint and token
+    inputs:
+      demo_mode: false
+      sor_endpoint: ""
+      sor_token: ""
+    expected: fail
+  - name: credentials are not logged
+    expected: static-review

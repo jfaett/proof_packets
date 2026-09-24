@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "controlled_reboot",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "rhel-automation-owner",
+  "summary": "Perform a bounded reboot only when required and verify host readiness.",
+  "inputs": ["demo_mode", "reboot_required", "reboot_timeout_seconds", "reboot_test_command"],
+  "outputs": ["controlled_reboot_result"],
+  "failures": ["host does not disconnect", "host does not return", "readiness command fails"],
+  "evidence": ["reboot decision", "elapsed result", "readiness result"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Host readiness only; application acceptance is a separate capability."
+}

@@ -1,0 +1,41 @@
+---
+- name: Validate simulated service health
+  ansible.builtin.assert:
+    that:
+      - simulated_health_passed | bool
+    fail_msg: "Simulated service acceptance failed; stop progression and exercise recovery."
+  when: demo_mode | bool
+
+- name: Gather live service facts
+  ansible.builtin.service_facts:
+  when:
+    - not demo_mode | bool
+    - health_services | length > 0
+
+- name: Verify selected live services
+  ansible.builtin.assert:
+    that:
+      - item in ansible_facts.services
+      - ansible_facts.services[item].state == 'running'
+    fail_msg: "Required service {{ item }} is not running."
+  loop: "{{ health_services }}"
+  when: not demo_mode | bool
+
+- name: Verify selected live HTTP endpoints
+  ansible.builtin.uri:
+    url: "{{ item.url }}"
+    method: GET
+    status_code: "{{ item.status_codes | default([200]) }}"
+    validate_certs: true
+    return_content: false
+  loop: "{{ health_endpoints }}"
+  register: service_health_http
+  when: not demo_mode | bool
+
+- name: Publish service health result
+  ansible.builtin.set_fact:
+    service_health_check_result:
+      simulated: "{{ demo_mode | bool }}"
+      services: "{{ health_services }}"
+      endpoints: "{{ health_endpoints | map(attribute='url') | list if health_endpoints | length > 0 else [] }}"
+      passed: true

@@ -1,0 +1,4 @@
+---
+demo_mode: true
+workload_services: []
+workload_action: quiesce

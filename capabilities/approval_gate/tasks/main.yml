@@ -1,0 +1,15 @@
+---
+- name: Validate approval context
+  ansible.builtin.assert:
+    that:
+      - approval_reference | length > 0
+      - approval_status in approval_allowed_statuses
+    fail_msg: "Approval gate stopped progression. Check the authoritative approval record."
+    success_msg: "Approval context permits progression."
+
+- name: Publish approval gate result
+  ansible.builtin.set_fact:
+    approval_gate_result:
+      status: "{{ approval_status }}"
+      reference: "{{ approval_reference }}"
+      passed: true

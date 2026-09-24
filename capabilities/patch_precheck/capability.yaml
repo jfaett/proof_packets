@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "patch_precheck",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "automation-content-owner",
+  "summary": "Gate patching on normalized disk, repository, package, and service readiness facts.",
+  "inputs": ["precheck_disk_free_mb", "precheck_min_free_mb", "precheck_repo_reachable", "precheck_package_ready", "precheck_service_healthy"],
+  "outputs": ["patch_precheck_result"],
+  "failures": ["insufficient disk", "repository unavailable", "package not ready", "service unhealthy"],
+  "evidence": ["normalized readiness checks"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Customer adapters collect facts; this role validates the normalized contract."
+}

@@ -1,0 +1,16 @@
+---
+cases:
+  - name: simulated healthy state passes
+    inputs:
+      demo_mode: true
+      simulated_health_passed: true
+    expected: pass
+  - name: simulated failed state stops progression
+    inputs:
+      demo_mode: true
+      simulated_health_passed: false
+    expected: fail
+  - name: live checks require customer-selected services or endpoints
+    inputs:
+      demo_mode: false
+    expected: pass-with-no-application-coverage

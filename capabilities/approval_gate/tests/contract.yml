@@ -1,0 +1,17 @@
+---
+cases:
+  - name: approved context passes
+    inputs:
+      approval_status: approved
+      approval_reference: CHG-1
+    expected: pass
+  - name: denied context stops
+    inputs:
+      approval_status: denied
+      approval_reference: CHG-2
+    expected: fail
+  - name: missing reference stops
+    inputs:
+      approval_status: approved
+      approval_reference: ""
+    expected: fail

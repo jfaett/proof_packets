@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "approval_gate",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "automation-content-owner",
+  "summary": "Validate that an approved workflow context permits progression.",
+  "inputs": ["approval_status", "approval_reference", "approval_allowed_statuses"],
+  "outputs": ["approval_gate_result"],
+  "failures": ["approval denied", "approval timed out", "reference missing"],
+  "evidence": ["approval status", "approval reference"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Reference validation role; authoritative approval remains in the workflow or ITSM system."
+}

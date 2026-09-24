@@ -1,0 +1,17 @@
+---
+cases:
+  - name: simulation is safe by default
+    inputs:
+      demo_mode: true
+      patch_execute_confirmed: false
+    expected: pass
+  - name: live mode without confirmation fails
+    inputs:
+      demo_mode: false
+      patch_execute_confirmed: false
+    expected: fail
+  - name: live mode with confirmation may execute
+    inputs:
+      demo_mode: false
+      patch_execute_confirmed: true
+    expected: environment-dependent

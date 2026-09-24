@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "evidence_checkpoint",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "evidence-automation-owner",
+  "summary": "Emit a redacted, versioned workflow checkpoint for each host and stage.",
+  "inputs": ["evidence_stage", "evidence_payload", "evidence_directory", "evidence_pack_version", "evidence_change_reference"],
+  "outputs": ["evidence_checkpoint_result", "JSON checkpoint"],
+  "failures": ["evidence directory unavailable", "serialization failed", "retention policy unmet"],
+  "evidence": ["checkpoint JSON"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Local reference sink; customer evidence platform, retention, and access controls require an adapter."
+}

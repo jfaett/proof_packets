@@ -1,0 +1,34 @@
+{
+  "$schema": "./use-case.schema.json",
+  "schema_version": "1.0",
+  "id": "replace-me",
+  "title": "Replace with outcome-oriented title",
+  "summary": "Replace with a concise service outcome.",
+  "version": "0.1.0",
+  "status": "draft",
+  "maturity": "draft",
+  "illustrative": true,
+  "outcome": {
+    "statement": "CUSTOMER INPUT REQUIRED",
+    "decision": "CUSTOMER INPUT REQUIRED"
+  },
+  "actors": [],
+  "systems": [],
+  "prerequisites": [],
+  "exclusions": [],
+  "metrics": [],
+  "capabilities": [],
+  "evidence": [],
+  "owners": {
+    "service": "CUSTOMER INPUT REQUIRED",
+    "content": "CUSTOMER INPUT REQUIRED",
+    "platform": "CUSTOMER INPUT REQUIRED"
+  },
+  "validation": {
+    "state": "not-validated",
+    "last_reviewed": null,
+    "reviewer": null
+  },
+  "deep_link_slug": "replace-me",
+  "related_use_cases": []
+}

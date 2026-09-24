@@ -1,0 +1,19 @@
+---
+cases:
+  - name: all normalized checks pass
+    inputs:
+      precheck_disk_free_mb: 8192
+      precheck_min_free_mb: 2048
+      precheck_repo_reachable: true
+      precheck_package_ready: true
+      precheck_service_healthy: true
+    expected: pass
+  - name: disk threshold stops progression
+    inputs:
+      precheck_disk_free_mb: 512
+      precheck_min_free_mb: 2048
+    expected: fail
+  - name: unhealthy service stops progression
+    inputs:
+      precheck_service_healthy: false
+    expected: fail

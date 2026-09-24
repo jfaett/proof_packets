@@ -1,0 +1,91 @@
+{
+  "$schema": "../../templates/proof-pack/use-case.schema.json",
+  "schema_version": "1.0",
+  "id": "rhel-patching",
+  "title": "Coordinate the RHEL patch window",
+  "summary": "Coordinate approved RHEL patching across request, readiness, service protection, update, reboot, verification, acceptance, and evidence.",
+  "version": "1.0.0",
+  "status": "active",
+  "maturity": "reference",
+  "illustrative": true,
+  "outcome": {
+    "statement": "Reduce avoidable coordination effort while protecting service acceptance and producing traceable patch evidence.",
+    "decision": "Determine whether measured local results justify expanding the governed patch workflow."
+  },
+  "actors": [
+    "requestor",
+    "change approver",
+    "RHEL platform owner",
+    "application owner",
+    "automation platform owner",
+    "service desk or evidence owner"
+  ],
+  "systems": [
+    "Ansible Automation Platform",
+    "approved content source such as Red Hat Satellite",
+    "ITSM",
+    "CMDB or configuration evidence store",
+    "application and cluster controls"
+  ],
+  "prerequisites": [
+    "approved scope and maintenance window",
+    "authoritative host ownership",
+    "approved package content",
+    "application quiesce and recovery contract",
+    "least-privilege credentials",
+    "evidence retention decision"
+  ],
+  "exclusions": [
+    "content lifecycle management",
+    "unapproved vulnerability remediation",
+    "universal application health definition",
+    "guaranteed package rollback",
+    "customer production runbook"
+  ],
+  "metrics": [
+    {"id": "request_to_acceptance_time", "unit": "elapsed hours", "direction": "decrease"},
+    {"id": "manual_touch_time", "unit": "person minutes per host or batch", "direction": "decrease"},
+    {"id": "manual_handoffs", "unit": "count per window", "direction": "decrease"},
+    {"id": "change_success_rate", "unit": "percent", "direction": "increase"},
+    {"id": "recovery_time", "unit": "elapsed minutes", "direction": "decrease"},
+    {"id": "evidence_completeness", "unit": "percent required fields", "direction": "increase"}
+  ],
+  "capabilities": [
+    "approval_gate",
+    "patch_precheck",
+    "workload_quiesce",
+    "apply_updates",
+    "controlled_reboot",
+    "service_health_check",
+    "evidence_checkpoint",
+    "system_of_record_update"
+  ],
+  "evidence": [
+    "approval reference",
+    "target and batch manifest",
+    "precheck result",
+    "approved content reference",
+    "package and kernel observation",
+    "reboot decision",
+    "application health result",
+    "owner acceptance",
+    "workflow job and content version"
+  ],
+  "owners": {
+    "service": "CUSTOMER INPUT REQUIRED: RHEL patch service owner",
+    "content": "Repository automation content owner",
+    "platform": "CUSTOMER INPUT REQUIRED: AAP platform owner"
+  },
+  "validation": {
+    "state": "reference-demo-validated",
+    "last_reviewed": "2026-09-24",
+    "reviewer": "Repository maintainer"
+  },
+  "deep_link_slug": "rhel-patching",
+  "related_use_cases": [
+    "windows-patching",
+    "baseline-verification",
+    "event-driven-remediation",
+    "application-release-orchestration"
+  ]
+}

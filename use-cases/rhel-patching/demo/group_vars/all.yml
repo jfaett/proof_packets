@@ -1,0 +1,32 @@
+---
+# ILLUSTRATIVE demo data. Replace through approved customer adaptation.
+demo_mode: true
+customer_adaptation_complete: false
+patch_execute_confirmed: false
+approval_authoritative: false
+
+proof_pack_version: 1.0.0
+approval_status: approved
+approval_reference: ILLUSTRATIVE-CHG-0001
+approval_allowed_statuses:
+  - approved
+
+patch_batch_size: 1
+precheck_disk_free_mb: 8192
+precheck_min_free_mb: 2048
+precheck_repo_reachable: true
+precheck_package_ready: true
+precheck_service_healthy: true
+
+workload_services:
+  - illustrative-app
+patch_security_only: false
+reboot_required: true
+reboot_timeout_seconds: 900
+health_services: []
+health_endpoints: []
+simulated_health_passed: true
+
+sor_endpoint: ""
+sor_token: ""
+sor_method: PATCH

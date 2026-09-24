@@ -1,0 +1,18 @@
+---
+cases:
+  - name: simulation reports decision without reboot
+    inputs:
+      demo_mode: true
+      reboot_required: true
+    expected: pass
+  - name: no reboot required skips live action
+    inputs:
+      demo_mode: false
+      reboot_required: false
+    expected: pass
+  - name: readiness timeout stops host
+    inputs:
+      demo_mode: false
+      reboot_required: true
+      reboot_timeout_seconds: 1
+    expected: environment-dependent

@@ -1,0 +1,11 @@
+---
+demo_mode: true
+sor_endpoint: ""
+sor_token: ""
+sor_method: PATCH
+sor_payload: {}
+sor_expected_status:
+  - 200
+  - 201
+  - 204
+sor_evidence_directory: "{{ playbook_dir }}/../evidence"

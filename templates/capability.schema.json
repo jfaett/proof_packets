@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/capability-v1.json",
+  "title": "Reusable capability",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "version",
+    "status",
+    "owner_role",
+    "summary",
+    "inputs",
+    "outputs",
+    "failures",
+    "evidence",
+    "consumers",
+    "support_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "status": {"enum": ["incubating", "reference", "deprecated", "retired"]},
+    "owner_role": {"type": "string", "minLength": 3},
+    "summary": {"type": "string", "minLength": 20},
+    "inputs": {"type": "array"},
+    "outputs": {"type": "array"},
+    "failures": {"type": "array"},
+    "evidence": {"type": "array"},
+    "consumers": {"type": "array"},
+    "support_boundary": {"type": "string", "minLength": 20}
+  },
+  "additionalProperties": true
+}

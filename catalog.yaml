@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "repository_version": "1.0.0",
+  "use_cases": [
+    {
+      "id": "rhel-patching",
+      "title": "Coordinate the RHEL patch window",
+      "path": "use-cases/rhel-patching",
+      "maturity": "reference",
+      "version": "1.0.0"
+    }
+  ],
+  "capabilities": [
+    {"id": "approval_gate", "path": "capabilities/approval_gate"},
+    {"id": "patch_precheck", "path": "capabilities/patch_precheck"},
+    {"id": "workload_quiesce", "path": "capabilities/workload_quiesce"},
+    {"id": "apply_updates", "path": "capabilities/apply_updates"},
+    {"id": "controlled_reboot", "path": "capabilities/controlled_reboot"},
+    {"id": "service_health_check", "path": "capabilities/service_health_check"},
+    {"id": "evidence_checkpoint", "path": "capabilities/evidence_checkpoint"},
+    {"id": "system_of_record_update", "path": "capabilities/system_of_record_update"}
+  ],
+  "practices": [
+    "discovery",
+    "sop-capture",
+    "metrics-based-process-mapping",
+    "decomposition",
+    "proof-design",
+    "recommoning"
+  ]
+}

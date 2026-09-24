@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "system_of_record_update",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "integration-automation-owner",
+  "summary": "Record workflow progress or acceptance in an authoritative external system.",
+  "inputs": ["demo_mode", "sor_endpoint", "sor_token", "sor_method", "sor_payload", "sor_evidence_directory"],
+  "outputs": ["system_of_record_update_result"],
+  "failures": ["authentication failed", "record rejected", "API unavailable", "schema mismatch"],
+  "evidence": ["response status", "record reference"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Generic HTTPS reference adapter; customer API schema, credential, retry, and retention policies apply."
+}

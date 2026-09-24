@@ -1,0 +1,17 @@
+---
+cases:
+  - name: simulation allows empty service list
+    inputs:
+      demo_mode: true
+      workload_action: quiesce
+    expected: pass
+  - name: live action requires selected services
+    inputs:
+      demo_mode: false
+      workload_services: []
+      workload_action: quiesce
+    expected: fail
+  - name: unsupported action fails
+    inputs:
+      workload_action: restart-everything
+    expected: fail

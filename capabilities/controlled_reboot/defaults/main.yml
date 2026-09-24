@@ -1,0 +1,5 @@
+---
+demo_mode: true
+reboot_required: true
+reboot_timeout_seconds: 900
+reboot_test_command: whoami

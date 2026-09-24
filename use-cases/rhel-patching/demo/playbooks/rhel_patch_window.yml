@@ -1,0 +1,53 @@
+---
+- name: Run the approved RHEL patch pilot
+  hosts: rhel_patch_pilot
+  gather_facts: false
+  any_errors_fatal: true
+  serial: 1
+  vars_files:
+    - ../group_vars/all.yml
+  pre_tasks:
+    - name: Enforce safe execution gates
+      ansible.builtin.assert:
+        that:
+          - demo_mode | bool or customer_adaptation_complete | bool
+          - demo_mode | bool or patch_execute_confirmed | bool
+          - demo_mode | bool or approval_authoritative | bool
+        fail_msg: "Live mode requires completed customer adaptation, explicit execution confirmation, and authoritative approval context."
+  tasks:
+    - name: Execute pilot capability chain
+      ansible.builtin.import_tasks: ../tasks/run_patch_batch.yml
+
+- name: Record pilot acceptance gate
+  hosts: rhel_patch_pilot
+  gather_facts: false
+  any_errors_fatal: true
+  vars_files:
+    - ../group_vars/all.yml
+  tasks:
+    - name: Confirm pilot permits the next batch
+      ansible.builtin.assert:
+        that:
+          - service_health_check_result.passed | bool
+        fail_msg: "Pilot acceptance failed; do not start the next batch."
+        success_msg: "Pilot accepted; the reference workflow may start the next approved batch."
+
+- name: Run approved RHEL patch batches
+  hosts: rhel_patch_batch
+  gather_facts: false
+  any_errors_fatal: true
+  max_fail_percentage: 0
+  serial: "{{ patch_batch_size | default(1) }}"
+  vars_files:
+    - ../group_vars/all.yml
+  pre_tasks:
+    - name: Enforce safe execution gates
+      ansible.builtin.assert:
+        that:
+          - demo_mode | bool or customer_adaptation_complete | bool
+          - demo_mode | bool or patch_execute_confirmed | bool
+          - demo_mode | bool or approval_authoritative | bool
+        fail_msg: "Live mode requires completed customer adaptation, explicit execution confirmation, and authoritative approval context."
+  tasks:
+    - name: Execute batch capability chain
+      ansible.builtin.import_tasks: ../tasks/run_patch_batch.yml

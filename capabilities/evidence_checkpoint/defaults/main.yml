@@ -1,0 +1,6 @@
+---
+evidence_stage: unspecified
+evidence_payload: {}
+evidence_directory: "{{ playbook_dir }}/../evidence"
+evidence_pack_version: 0.0.0
+evidence_change_reference: ILLUSTRATIVE-CHG-0001

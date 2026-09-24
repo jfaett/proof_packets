@@ -1,0 +1,27 @@
+---
+- name: Validate workload action
+  ansible.builtin.assert:
+    that:
+      - workload_action in ['quiesce', 'restore']
+      - demo_mode | bool or workload_services | length > 0
+    fail_msg: "Live workload control requires an explicit service list and supported action."
+
+- name: Explain simulated workload transition
+  ansible.builtin.debug:
+    msg: "SIMULATION: would {{ workload_action }} services {{ workload_services | default([]) }}"
+  when: demo_mode | bool
+
+- name: Apply live workload service state
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: "{{ 'stopped' if workload_action == 'quiesce' else 'started' }}"
+  loop: "{{ workload_services }}"
+  when: not demo_mode | bool
+
+- name: Publish workload transition result
+  ansible.builtin.set_fact:
+    workload_quiesce_result:
+      action: "{{ workload_action }}"
+      services: "{{ workload_services }}"
+      simulated: "{{ demo_mode | bool }}"
+      passed: true

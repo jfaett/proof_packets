@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "apply_updates",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "rhel-automation-owner",
+  "summary": "Apply approved RHEL package updates behind an explicit live-execution gate.",
+  "inputs": ["demo_mode", "patch_execute_confirmed", "patch_security_only"],
+  "outputs": ["apply_updates_result"],
+  "failures": ["execution not confirmed", "package transaction failed", "repository or dependency error"],
+  "evidence": ["package task result", "changed state"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Reference dnf implementation; customer owns approved content, repository, exclusions, and recovery policy."
+}

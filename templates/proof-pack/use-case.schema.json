@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/proof-pack-v1.json",
+  "title": "Proof Pack v1 use case",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "summary",
+    "version",
+    "status",
+    "maturity",
+    "illustrative",
+    "outcome",
+    "actors",
+    "systems",
+    "metrics",
+    "capabilities",
+    "evidence",
+    "owners",
+    "validation",
+    "deep_link_slug"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string", "minLength": 8},
+    "summary": {"type": "string", "minLength": 20},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "status": {"enum": ["draft", "active", "retired"]},
+    "maturity": {"enum": ["draft", "demonstrable", "reference", "proven-local", "retired"]},
+    "illustrative": {"type": "boolean"},
+    "outcome": {
+      "type": "object",
+      "required": ["statement", "decision"]
+    },
+    "actors": {"type": "array"},
+    "systems": {"type": "array"},
+    "prerequisites": {"type": "array"},
+    "exclusions": {"type": "array"},
+    "metrics": {"type": "array"},
+    "capabilities": {"type": "array"},
+    "evidence": {"type": "array"},
+    "owners": {
+      "type": "object",
+      "required": ["service", "content", "platform"]
+    },
+    "validation": {
+      "type": "object",
+      "required": ["state", "last_reviewed", "reviewer"]
+    },
+    "deep_link_slug": {"type": "string"},
+    "related_use_cases": {"type": "array"}
+  },
+  "additionalProperties": true
+}

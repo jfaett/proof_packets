@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "base_url": "https://REPLACE-WITH-APPROVED-HOST",
+  "redirects": [
+    {
+      "slug": "rhel-patching",
+      "target": "use-cases/rhel-patching/README.md",
+      "audience": "all"
+    },
+    {
+      "slug": "rhel-patching/discover",
+      "target": "use-cases/rhel-patching/02-discovery-guide.md",
+      "audience": "seller-sa"
+    },
+    {
+      "slug": "rhel-patching/demo",
+      "target": "use-cases/rhel-patching/demo/setup.md",
+      "audience": "sa"
+    },
+    {
+      "slug": "rhel-patching/prove",
+      "target": "use-cases/rhel-patching/06-measurement-and-proof.md",
+      "audience": "seller-sa"
+    },
+    {
+      "slug": "proof-pack-v1",
+      "target": "templates/proof-pack/README.md",
+      "audience": "contributor"
+    }
+  ]
+}

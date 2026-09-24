@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "id": "workload_quiesce",
+  "version": "1.0.0",
+  "status": "reference",
+  "owner_role": "application-automation-owner",
+  "summary": "Quiesce or restore explicitly selected workload services around maintenance.",
+  "inputs": ["demo_mode", "workload_services", "workload_action"],
+  "outputs": ["workload_quiesce_result"],
+  "failures": ["service action failed", "unsupported application recovery contract"],
+  "evidence": ["requested action", "affected services", "task result"],
+  "consumers": ["rhel-patching"],
+  "support_boundary": "Illustrative system-service adapter; customer application owner defines the real quiesce contract."
+}
